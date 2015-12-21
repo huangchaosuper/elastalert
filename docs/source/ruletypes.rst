@@ -70,7 +70,7 @@ Rule Configuration Cheat Sheet
 +--------------------------------------------------------------+           |
 | ``filter`` (ES filter DSL, no default)                       |           |
 +--------------------------------------------------------------+           |
-| ``max_query_size`` (int, default 100k)                       |           |
+| ``max_query_size`` (int, default global max_query_size)      |           |
 +--------------------------------------------------------------+           |
 | ``query_delay`` (time, default 0 min)                        |           |
 +--------------------------------------------------------------+           |
@@ -272,7 +272,7 @@ max_query_size
 ``max_query_size``: The maximum number of documents that will be downloaded from Elasticsearch in a single query. If you
 expect a large number of results, consider using ``use_count_query`` for the rule. If this
 limit is reached, a warning will be logged but ElastAlert will continue without downloading more results. This setting will
-override a global ``max_query_size``. (Optional, int, default 100,000)
+override a global ``max_query_size``. (Optional, int, default value of global ``max_query_size``)
 
 filter
 ^^^^^^
@@ -1097,6 +1097,23 @@ The alerter requires the following option:
 ``pagerduty_service_key``: Integration Key generated after creating a service with the 'Use our API directly' option at Integration Settings
 
 ``pagerduty_client_name``: The name of the monitoring client that is triggering this event.
+
+VictorOps  
+~~~~~~~~~
+
+VictorOps alerter will trigger an incident to a predefined VictorOps routing key. The body of the notification is formatted the same as with other alerters.
+
+The alerter requires the following options:
+
+``victorops_api_key``: API key generated under the 'REST Endpoint' in the Integrations settings.
+
+``victorops_routing_key``: VictorOps routing key to route the alert to.
+
+``victorops_message_type``: VictorOps field to specify serverity level. Must be one of the following: INFO, WARNING, ACKNOWLEDGEMENT, CRITICAL, RECOVERY
+
+Optional:
+
+``victorops_entity_display_name``: Humna-readable name of alerting entity. Used by VictorOps to correlate incidents by host througout the alert lifecycle. 
 
 Debug
 ~~~~~~
